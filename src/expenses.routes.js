@@ -8,13 +8,11 @@ const router = express.Router();
 const keys = ['spentAt', 'title', 'amount', 'category', 'note'];
 
 router.get('/', (req, res) => {
-  const searchParams = new URLSearchParams(req.url.slice(2));
-
-  if (searchParams.length) {
-    const userId = searchParams.get('userId') || null;
-    const category = searchParams.get('category')?.trim();
-    const from = searchParams.get('from') || null;
-    const to = searchParams.get('to') || null;
+  if (req.query) {
+    const userId = req.query['userId'] || null;
+    const category = req.query['category']?.trim() || null;
+    const from = req.query['from'] || null;
+    const to = req.query['to'] || null;
 
     const expenses = expensesController.getByParams(userId, category, from, to);
 
@@ -61,7 +59,7 @@ router.post('/', express.json(), (req, res) => {
   }
 
   if (!userController.getById(userId)) {
-    res.statusCode = 400;
+    res.statusCode = 404;
     res.end();
 
     return;
