@@ -5,27 +5,24 @@ const expensesController = require('./expenses.controller.js');
 
 const router = express.Router();
 
-const keys = ['userId', 'spentAt', 'title', 'amount', 'category', 'note'];
+const keys = ['spentAt', 'title', 'amount', 'category', 'note'];
 
 router.get('/', (req, res) => {
   const searchParams = new URLSearchParams(req.url.slice(2));
 
   if (searchParams) {
-    const userId = searchParams.get('userId');
-    const category = searchParams.get('category');
-    const from = searchParams.get('from');
-    const to = searchParams.get('to');
+    const userId = +searchParams.get('userId') || null;
+    const category = searchParams.get('category')?.trim();
+    const from = searchParams.get('from') || null;
+    const to = searchParams.get('to') || null;
 
-    const expenses = expensesController.getByParams(
-      +userId,
-      category,
-      from,
-      to,
-    );
+    const expenses = expensesController.getByParams(userId, category, from, to);
 
     if (!expenses.length) {
       res.statusCode = 404;
       res.end();
+
+      return;
     }
 
     res.statusCode = 200;
@@ -45,6 +42,8 @@ router.get('/:id', (req, res) => {
   if (!target) {
     res.statusCode = 404;
     res.end();
+
+    return;
   }
 
   res.statusCode = 200;
@@ -69,7 +68,7 @@ router.post('/', express.json(), (req, res) => {
   }
 
   if (!userController.getById(userId)) {
-    res.statusCode = 404;
+    res.statusCode = 400;
     res.end();
 
     return;

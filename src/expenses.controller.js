@@ -1,6 +1,33 @@
-// const { v4: uuidv4 } = require('uuid');
-
-let expenses = [];
+let expenses = [
+  {
+    id: 0,
+    userId: 2,
+    spentAt: '2020-07-20T15:49:04-07:00',
+    title: 'string',
+    amount: 0,
+    category: 'string',
+    note: 'string',
+  },
+  {
+    id: 1,
+    userId: 2,
+    spentAt: '2020-07-20T15:49:04-07:00',
+    title: 'string',
+    amount: 0,
+    category: 'string',
+    note: 'string',
+  },
+  {
+    id: 2,
+    userId: 1,
+    spentAt: '2015-07-20T15:49:04-07:00',
+    title: 'string',
+    amount: 0,
+    category: 'go',
+    note: 'string',
+  },
+];
+// let expenses = [];
 
 const getAll = () => {
   return expenses;
@@ -13,16 +40,21 @@ const getById = (id) => {
 const getByParams = (userId, category, from, to) => {
   let exps = [...expenses];
 
-  if (typeof userId === 'number') {
-    exps = expenses.filter((exp) => exp.userId === userId);
+  if (userId || userId === 0) {
+    exps = exps.filter((exp) => exp.userId === userId);
   }
 
-  if (category) {
-    exps = expenses.filter((exp) => exp.category === 'category');
+  if (category?.trim()) {
+    exps = exps.filter((exp) => exp.category === category);
   }
 
   if (from && to) {
-    exps = expenses.filter((exp) => from < exp.spentAt < to);
+    exps = exps.filter((exp) => {
+      return (
+        new Date(from).getTime() < new Date(exp.spentAt).getTime() &&
+        new Date(exp.spentAt).getTime() < new Date(to).getTime()
+      );
+    });
   }
 
   return exps;
