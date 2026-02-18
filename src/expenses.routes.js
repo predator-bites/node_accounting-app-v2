@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
   const searchParams = new URLSearchParams(req.url.slice(2));
 
   if (searchParams.length) {
-    const userId = +searchParams.get('userId') || null;
+    const userId = searchParams.get('userId') || null;
     const category = searchParams.get('category')?.trim();
     const from = searchParams.get('from') || null;
     const to = searchParams.get('to') || null;

@@ -11,7 +11,7 @@ const getById = (id) => {
 const getByParams = (userId, category, from, to) => {
   let exps = [...expenses];
 
-  if (userId || userId === 0) {
+  if (userId !== null && +userId) {
     exps = exps.filter((exp) => exp.userId === userId);
   }
 
