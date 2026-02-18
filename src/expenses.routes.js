@@ -10,20 +10,13 @@ const keys = ['spentAt', 'title', 'amount', 'category', 'note'];
 router.get('/', (req, res) => {
   const searchParams = new URLSearchParams(req.url.slice(2));
 
-  if (searchParams) {
+  if (searchParams.length) {
     const userId = +searchParams.get('userId') || null;
     const category = searchParams.get('category')?.trim();
     const from = searchParams.get('from') || null;
     const to = searchParams.get('to') || null;
 
     const expenses = expensesController.getByParams(userId, category, from, to);
-
-    if (!expenses.length) {
-      res.statusCode = 404;
-      res.end();
-
-      return;
-    }
 
     res.statusCode = 200;
     res.send(expenses);

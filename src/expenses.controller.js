@@ -1,33 +1,4 @@
-let expenses = [
-  {
-    id: 0,
-    userId: 2,
-    spentAt: '2020-07-20T15:49:04-07:00',
-    title: 'string',
-    amount: 0,
-    category: 'string',
-    note: 'string',
-  },
-  {
-    id: 1,
-    userId: 2,
-    spentAt: '2020-07-20T15:49:04-07:00',
-    title: 'string',
-    amount: 0,
-    category: 'string',
-    note: 'string',
-  },
-  {
-    id: 2,
-    userId: 1,
-    spentAt: '2015-07-20T15:49:04-07:00',
-    title: 'string',
-    amount: 0,
-    category: 'go',
-    note: 'string',
-  },
-];
-// let expenses = [];
+let expenses = [];
 
 const getAll = () => {
   return expenses;

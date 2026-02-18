@@ -49,6 +49,8 @@ router.delete('/:id', (req, res) => {
     res.statusCode = 404;
 
     res.end();
+
+    return;
   }
 
   res.statusCode = 204;
